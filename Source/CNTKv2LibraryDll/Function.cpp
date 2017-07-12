@@ -689,13 +689,13 @@ namespace CNTK
                                 {
                                     //parameter values can be updated so we need our own copy
                                     const auto& ndav = Parameter(cloneeInput).Value();
-                                    clonedInput = Constant(ndav->DeepClone(ndav->Device(), /*readOnly=*/ true), cloneeInput.Name());
+                                    clonedInput = Constant(ndav->DeepClone(ndav->Device(), ndav->IsReadOnly()), cloneeInput.Name());
                                 }
                                 else
                                 {
                                     //constants can also be updated via non-sgd means
                                     const auto& ndav = Constant(cloneeInput).Value();
-                                    clonedInput = Constant(ndav->DeepClone(ndav->Device(), /*readOnly=*/ true), cloneeInput.Name());
+                                    clonedInput = Constant(ndav->DeepClone(ndav->Device(), ndav->IsReadOnly()), cloneeInput.Name());
                                 }
                                 leafVariablesCloneMap[cloneeInput] = clonedInput;
                                 break;
