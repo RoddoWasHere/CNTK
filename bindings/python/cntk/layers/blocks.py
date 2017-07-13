@@ -10,6 +10,7 @@ e.g. the LSTM block.
 '''
 
 from __future__ import division
+import warnings
 import numpy as np
 from cntk import placeholder, combine, alias
 from cntk.variables import Constant, Parameter

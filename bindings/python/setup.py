@@ -55,8 +55,11 @@ else:
         CNTK_LIB_PATH = os.path.join(
             CNTK_PATH, "build", "gpu", "release", "lib")
 
+shared_library_glob = '*.dll' if IS_WINDOWS else '*.so*'
+
 if 'CNTK_LIBRARIES' in os.environ:
-    CNTK_SHARED_LIBARIES = os.environ['CNTK_LIBRARIES'].split(';' if IS_WINDOWS else None)
+    CNTK_SHARED_LIBARIES = [os.path.join(CNTK_LIB_PATH, fn) for fn in
+        os.environ['CNTK_LIBRARIES'].split(';' if IS_WINDOWS else None)]
 else:
     CNTK_SHARED_LIBARIES = glob(os.path.join(CNTK_LIB_PATH, shared_library_glob))
 
@@ -67,7 +70,6 @@ if 'CNTK_EXTRA_LIBRARIES' in os.environ:
 package_name = 'cntk'
 relative_shared_library_path = [] if IS_WINDOWS else ['libs']
 shared_library_path = os.path.join(os.path.dirname(__file__), package_name, *relative_shared_library_path)
-shared_library_glob = '*.dll' if IS_WINDOWS else '*.so*'
 
 if not os.path.isdir(shared_library_path):
     os.mkdir(shared_library_path)
